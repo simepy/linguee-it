@@ -1,8 +1,14 @@
 {
-
   "manifest_version": 2,
   "name": "Linguee it!",
   "version": "0.3.1",
+  "background": {
+    "scripts": ["popup/background.js"]
+  },
+
+  "web_accessible_resources": [
+    "popup/frame.html"
+  ],
 
   "description": "Displays words and sentences translation using Linguee™.",
   "homepage_url": "https://github.com/renanbr/linguee-it",
@@ -15,10 +21,18 @@
     "activeTab"
   ],
 
+  "commands": {
+    "toggle-feature": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+U"
+      },
+      "description": "Send a 'toggle-feature' event"
+    }
+  },
+
   "browser_action": {
     "default_icon": "icons/linguee-32.png",
     "default_title": "Linguee it!",
     "default_popup": "popup/index.html"
   }
-
 }
