@@ -1,6 +1,6 @@
-browser.commands.onCommand.addListener(function(command) {
+chrome.commands.onCommand.addListener(function(command) {
   if (command == "toggle-feature") {
-    browser.tabs.executeScript({
+    chrome.tabs.executeScript({
       file: "popup/contentScript.js"
     });
   }

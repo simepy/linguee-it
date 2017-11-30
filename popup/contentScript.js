@@ -469,39 +469,53 @@ var pairUrl = {
   'MT-ET': 'https://app.mt.linguee.com/malti-estonjan'
 }
 
-if (document.getElementById("lingueeExtension"))
-{
-  var e = document.getElementById("lingueeExtension")
-  e.parentNode.removeChild(e);
-}
-else
-{
-  var text = window.getSelection().toString();
-  var textLang = document.documentElement.lang.substring(0, 2).toUpperCase();
-  var userLang = browser.i18n.getUILanguage().substring(0, 2).toUpperCase();
-  var url = "http://app.linguee.com";
-  var urlPaired = null;
-  var iframe = document.createElement('iframe');
+document.body.addEventListener("click", removeIframe);
 
-  if (!text) {
-    // When no text is selected, open welcome page
-    urlPaired = pairUrl[textLang + "-" + userLang];
-    if (urlPaired) {
-      url = urlPaired.substring(0, urlPaired.lastIndexOf("/"));
-    }
-    iframe.style.cssText = 'background: url(loading.gif) no-repeat center center;border: none;position:fixed;top:0;left:0;display:block;' +
-      'width:320px;height:320px;z-index:1000;';
-  } else {
-    // When a text is selected, build URL with translation result
-    urlPaired = pairUrl[textLang + "-" + userLang];
-    if (urlPaired) {
-      url = urlPaired + "/search?source=auto&query=" + text;
-    }
-    iframe.style.cssText = 'background: url(loading.gif) no-repeat center center;border: none;position:fixed;top:0;left:0;display:block;' +
-      'width:320px;height:320px;z-index:1000;';
+function removeIframe() {
+  if (document.getElementById("lingueeExtension")) {
+    var e = document.getElementById("lingueeExtension")
+    e.parentNode.removeChild(e);
   }
-  iframe.id = "lingueeExtension";
-  iframe.src = url;
-  // Some styles for a fancy sidebar
-  document.body.appendChild(iframe);
+}
+
+if (document.getElementById("lingueeExtension") == null) {
+  var text = window.getSelection();
+
+  if (text.toString()) {
+    // When a text is selected, build URL with translation result
+    var textLang = document.documentElement.lang.substring(0, 2).toUpperCase();
+    var userLang = chrome.i18n.getUILanguage().substring(0, 2).toUpperCase();
+    var urlPaired = null;
+    var iframe = document.createElement('iframe');
+    var url = "https://app.linguee.com";
+
+    iframe.style.cssText = 'border: none;position:absolute;display: block;z-index:1000;';
+    var r = text.getRangeAt(0).getBoundingClientRect();
+    var relative = document.body.parentNode.getBoundingClientRect();
+    var top = (r.bottom - relative.top); // compute iframe top below the selection
+    var left = (r.left- relative.left); // compute iframe left below the selection
+    var width = height = 320; // width and height value for iframe size
+
+    // check if value iframe left exceed page
+    if ((left + width) > document.body.clientWidth)
+      iframe.style.left = document.body.clientWidth - width + 'px';
+    else
+      iframe.style.left = left + 'px';
+    // check if value iframe top exceed page
+    if ((top + height) > document.body.clientHeight)
+      iframe.style.top = (top - (height + 25)) + 'px';
+    else
+      iframe.style.top = top + 'px';
+    iframe.style.width = width + 'px';
+    iframe.style.height = height + 'px';
+
+    urlPaired = pairUrl[textLang + "-" + userLang];
+    if (urlPaired) {
+      url = urlPaired + "/search?source=auto&query=" + text.toString();
+    }
+    iframe.id = "lingueeExtension";
+    iframe.src = url;
+    // add iframe in body
+    document.body.appendChild(iframe);
+  }
 }
