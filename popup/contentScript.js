@@ -510,12 +510,9 @@ if (document.getElementById("lingueeExtension") == null) {
     iframe.style.height = height + 'px';
 
     if (textLang)
-      if (textLang != userLang)
-        urlPaired = pairUrl[textLang + "-" + userLang];
-      else
-        urlPaired = pairUrl["EN" + "-" + "FR"];
+      urlPaired = pairUrl[textLang + "-" + userLang];
     else
-      urlPaired = pairUrl["EN" + "-" + userLang];
+      urlPaired = pairUrl["EN-" + userLang];
     url = urlPaired + "/search?source=auto&query=" + text.toString();
     iframe.id = "lingueeExtension";
     iframe.src = url;

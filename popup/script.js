@@ -28,8 +28,11 @@ window.onload = function() {
                     url = urlPaired.substring(0, urlPaired.lastIndexOf("/"));
                 }
             } else {
-                // When a text is selected, build URL with translation result
-                urlPaired = pairUrl[textLang + "-" + userLang];
+                // When a text is selected, build URL with translation result 
+                if (textLang)
+                    urlPaired = pairUrl[textLang + "-" + userLang];
+                else
+                    urlPaired = pairUrl["EN-" + userLang];
                 if (urlPaired) {
                     url = urlPaired + "/search?source=auto&query=" + text;
                 }
