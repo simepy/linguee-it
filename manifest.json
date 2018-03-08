@@ -24,7 +24,7 @@
   "commands": {
     "toggle-feature": {
       "suggested_key": {
-        "default": "Ctrl+Shift+U"
+        "default": "Alt+Q"
       },
       "description": "Send a 'toggle-feature' event"
     }
