@@ -17,7 +17,7 @@ window.onload = function() {
 
             var text = data[0].text;
             var textLang = data[0].lang.substring(0, 2).toUpperCase();
-            var userLang = chrome.i18n.getUILanguage().substring(0, 2).toUpperCase();
+            var userLang = browser.i18n.getUILanguage().substring(0, 2).toUpperCase();
             var url = "https://app.linguee.com";
             var urlPaired = null;
 
