@@ -6,10 +6,6 @@
     "scripts": ["popup/background.js"]
   },
 
-  "web_accessible_resources": [
-    "popup/frame.html"
-  ],
-
   "description": "Displays words and sentences translation using Linguee™.",
   "homepage_url": "https://github.com/renanbr/linguee-it",
   "icons": {
